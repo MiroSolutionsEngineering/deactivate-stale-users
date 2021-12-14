@@ -10,7 +10,7 @@ This example explains how to retrieve and deactivate inactive/stale users using 
 
 ### Step 1. Ensure SCIM and Organization API is enabled
 
-- To use the script in this repository, SCIM must be enabled in the respective Miro account.
+- To use the app in this repository, SCIM must be enabled in the respective Miro account.
 
 - Make sure the Organization API is enabled for the respective account. This can be requested with your Customer Success Manager at Miro.
 

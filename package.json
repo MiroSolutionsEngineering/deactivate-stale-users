@@ -1,5 +1,5 @@
 {
-    "name": "deactivate-miro-stale-users",
+    "name": "deactivate-stale-users",
     "version": "1.0.0",
     "private": true,
     "main": "index.js",

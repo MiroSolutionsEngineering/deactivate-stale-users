@@ -55,7 +55,7 @@ npm start
 
 ## Expected results
 
-Once the script runs the results will be available in the local folder "output_files". There you will find the below files:
+Once the script runs the results will be available in the local folder `output_files`. There you will find the below files:
 
 - `stale_users_(unique-timestamp)_.json`: An array of a stale users (before deactivation).
 

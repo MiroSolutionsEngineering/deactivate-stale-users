@@ -17,7 +17,7 @@ This example explains how to retrieve and deactivate inactive/stale users using 
 ### Step 2. Clone the repo and install the dependencies
 
 ```bash
-git clone https://github.com/LuisSantosColman/miro-deactivate-stale-users.git
+git clone https://github.com/MiroSolutionsEngineering/deactivate-stale-users.git
 npm install
 ```
 

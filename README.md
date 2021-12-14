@@ -37,7 +37,7 @@ cp .env.example .env
 
 ### Step 5. Get the SCIM API Token
 
-- In your Miro account go to "Security" and copy the SCIM API token
+- In your Miro account go to `Settings > Security` and copy the SCIM API token
 
 - Add the Miro SCIM API token in the `.env` file
 

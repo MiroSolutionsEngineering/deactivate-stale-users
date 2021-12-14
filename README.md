@@ -52,3 +52,25 @@ cp .env.example .env
 ```bash
 npm start
 ```
+
+## Expected results
+
+Once the script runs the results will be available in the local folder "output_files". There you will find the below files:
+
+- `stale_users_(unique-timestamp)_.json`: An array of a stale users (before deactivation).
+
+- `deactivated_users_(unique-timestamp)_.json`: An array of a users that got successfully deactivated by the app.
+
+- `conflict_users_(unique-timestamp)_.json`: An array of users that could not be deactivated because they are the last Team Admin in at least one of the Miro Teams they belong to. Since every Team within a Miro organization must have a least one Team Admin, the SCIM API returns a `409` error when attempting to deactivate a user that is the last Team Admin of a Team. This array of conflict users allows you to review manually and act accordingly.
+
+- `other_failed_requests_(unique-timestamp)_.json`: An array of users that could not be deactivated due other errors that are not `409: Any account in organization must have at least one admin` or `429: Too many requests`. The array contains detailed information about the failed request (such as: userId, email, request URL, error code, error message).
+
+## Expected errors
+
+The SCIM API can return the below **expected** errors:
+
+- `409`: Received when the user to downgrade is the last Team Admin of Miro Team. **Message**: `Any account in organization must have at least one admin`. In this case a file named `conflict_users_(unique-timestamp)_.json` will be created containing the users that could not be deactivated for you to review manually and act accordingly. 
+
+- `429`: Received when the amount of requests made exeeds the SCIM API rate limit. **Message**: `Too many requests`. When this occurs, the script automatically holds execution for 61 seconds and then resumes execution automatically, there is no action needed from your side. To learn more about Miro's SCIM API rate limits, click [here](https://developers.miro.com/docs/scim-rate-limits).
+
+- To see a full list of all possible errors, click [here](https://developers.miro.com/docs/scim-errors).

@@ -34,7 +34,8 @@ async function init() {
         .then(manageErrors)
         .then((res) => {
             if (res.ok) {
-                return res[res.status == 204 ? 'text' : 'json']().then((data) => ({ status: res.status, body: data }));
+                var rateLimitRemaining = res.headers.get('X-RateLimit-Remaining');
+                return res[res.status == 204 ? 'text' : 'json']().then((data) => ({ status: res.status, rate_limit_remaining: rateLimitRemaining, body: data }));
             }
         })
         .catch((error) => {
@@ -73,6 +74,9 @@ async function init() {
             if (activeUsers.body.size === 100) {
                 var lastUserOfpreviousResponse = activeUsers.body.data[activeUsers.body.data.length - 1].id;
                 var url = `https://api.miro.com/vNext/organizations/${orgId}/members?active=true&cursor=${lastUserOfpreviousResponse}`;
+                if (activeUsers.rate_limit_remaining === 0) {
+                    await holdScriptExecution(61000);
+                }
                 return await getActiveStaleUsers(url,reqOptions, orgId, staleUsersArray, lastAcceptedDate);
             }
             else {
@@ -160,7 +164,6 @@ async function init() {
                 fs.writeFile(fileName, content, function(err) {});
             }
             if (failedRequestsDueToTooManyRequests.length > 0) {
-                console.log('**** Rate limit of REST API reached -- Waiting 61 seconds to continue requests - Current time: ' + new Date() + '***');
                 await holdScriptExecution(61000);
                 return await deactivateUsers(urls, scimReqOptions, failedRequestsDueToTooManyRequests);
             }

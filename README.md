@@ -63,7 +63,7 @@ Once the script runs the results will be available in the local folder `output_f
 
 - `conflict_users_(unique-timestamp)_.json`: An array of users that could not be deactivated because they are the last Team Admin in at least one of the Miro Teams they belong to. Since every Team within a Miro organization must have a least one Team Admin, the SCIM API returns a `409` error when attempting to deactivate a user that is the last Team Admin of a Team. This array of conflict users allows you to review manually and act accordingly.
 
-- `other_failed_requests_(unique-timestamp)_.json`: An array of users that could not be deactivated due other errors that are not `409: Any account in organization must have at least one admin` or `429: Too many requests`. The array contains detailed information about the failed request (such as: userId, email, request URL, error code, error message).
+- `other_failed_requests_(unique-timestamp)_.json`: An array of users that could not be deactivated due other errors that are not `409` or `429`. The array contains detailed information about the failed request (such as: userId, email, request URL, error code, error message).
 
 ## Expected errors
 

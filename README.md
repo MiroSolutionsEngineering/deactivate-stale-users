@@ -69,8 +69,10 @@ Once the script runs the results will be available in the local folder `output_f
 
 The SCIM API can return the below **expected** errors:
 
-- `409`: Received when the user to downgrade is the last Team Admin of a Miro Team. **Message**: `Any account in organization must have at least one admin`. In this case a file named `conflict_users_(unique-timestamp)_.json` will be created within the folder `output_file` containing the users that could not be deactivated so you can review manually and act accordingly. 
+- `409: Any account in organization must have at least one admin`: Received when the user to downgrade is the last Team Admin of a Miro Team. **Message**: `Any account in organization must have at least one admin`. In this case a file named `conflict_users_(unique-timestamp)_.json` will be created within the folder `output_file` containing the users that could not be deactivated so you can review manually and act accordingly. 
 
-- `429`: Received when the amount of requests made exeeds the SCIM API rate limit. **Message**: `Too many requests`. When this occurs, the script automatically holds execution for 61 seconds and then resumes execution automatically, there is no action needed from your side. To learn more about Miro's SCIM API rate limits, click [here](https://developers.miro.com/docs/scim-rate-limits).
+- `429: Too many requests`: Received when the amount of requests made exeeds the SCIM API rate limit. **Message**: `Too many requests`. When this occurs, the script automatically holds execution for 61 seconds and then resumes execution automatically, there is no action needed from your side. To learn more about Miro's SCIM API rate limits, click [here](https://developers.miro.com/docs/scim-rate-limits).
+
+- `404: No resource with ID {user_id}`: Received when attempting to deactivate a user with the role `organization_external_user`. The SCIM API can only deactivate user with the role `organization_internal_user`. These users would need to be manually deactivated from the Miro User Interface or turned into internal users (after internal approval within your organization has been given).
 
 - To see a full list of all possible errors, click [here](https://developers.miro.com/docs/scim-errors).

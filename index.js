@@ -63,7 +63,7 @@ async function init() {
         var activeUsers = await callAPI(url,reqOptions);
         if (activeUsers.status === 200) {
             for(var a=0; a < activeUsers.body.data.length; a++) {
-                if(typeof(activeUsers.body.data[a].lastActivityAt) !== 'undefined') {
+                if (typeof(activeUsers.body.data[a].lastActivityAt) !== 'undefined') {
                     if(activeUsers.body.data[a].lastActivityAt < lastAcceptedDate) {
                         staleUsersArray.push(activeUsers.body.data[a]);
                     }
@@ -168,16 +168,6 @@ async function init() {
                 return await deactivateUsers(urls, scimReqOptions, failedRequestsDueToTooManyRequests);
             }
         }
-        else {
-            console.log('--- SUCCESS! --- Users successfully deactivated - See full details of deactivated users in the output file "deactivated_users.json" or in the list below');
-            console.log(JSON.stringify(result, null, '\t'));
-            if (result.length === 0) {
-                result = '[]';
-            }
-            var fileName = 'output_files/deactivated_users_' + (+new Date()) + '_.json';
-            fs.writeFile(fileName, result, function(err) {});
-            return result;
-        }
         return result;
     }
 
@@ -207,34 +197,42 @@ async function init() {
     var staleUsers = await getActiveStaleUsers(orgUrl, orgReqOptions, orgId, [], lastAcceptedDate);
 
     if (staleUsers.status === 'ok') {
-        var urls = [];
-        for(var b=0; b < staleUsers.data.length; b++) {
-            var url = 'https://miro.com/api/v1/scim/Users/' + staleUsers.data[b].id + '?attributes=id,userName,active&email=' + staleUsers.data[b].email;
-            urls.push(url);
+        if (staleUsers.data.length > 0) {
+            var urls = [];
+            for(var b=0; b < staleUsers.data.length; b++) {
+                var url = 'https://miro.com/api/v1/scim/Users/' + staleUsers.data[b].id + '?attributes=id,userName,active&email=' + staleUsers.data[b].email;
+                urls.push(url);
+            }
+
+            var scimReqHeaders = {
+                'cache-control': 'no-cache',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + SCIM_API_TOKEN
+            };
+            var raw = JSON.stringify({
+                "schemas": [
+                    "urn:ietf:params:scim:api:messages:2.0:PatchOp"
+                ],
+                "Operations": [{
+                    "op": "Replace",
+                    "path": "active",
+                    "value": false
+                }]
+            });
+            var scimReqOptions = {
+                method: 'PATCH',
+                headers: scimReqHeaders,
+                body: raw
+            };
+
+            var deactivatedUsers = await deactivateUsers(urls, scimReqOptions, []);
         }
-
-        var scimReqHeaders = {
-            'cache-control': 'no-cache',
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + SCIM_API_TOKEN
-        };
-        var raw = JSON.stringify({
-            "schemas": [
-                "urn:ietf:params:scim:api:messages:2.0:PatchOp"
-            ],
-            "Operations": [{
-                "op": "Replace",
-                "path": "active",
-                "value": false
-            }]
-        });
-        var scimReqOptions = {
-            method: 'PATCH',
-            headers: scimReqHeaders,
-            body: raw
-        };
-
-        var deactivatedUsers = await deactivateUsers(urls, scimReqOptions, []);
+        else {
+            console.log('====== No stale users to deactivate =====');
+            var fileName = 'output_files/deactivated_users_' + (+new Date()) + '_.json';
+            var result = '[]';
+            fs.writeFile(fileName, result, function(err) {});
+        }
     }
     else {
         console.log('**** ERORR *** - Retrieving stale users failed - Please check errors above');

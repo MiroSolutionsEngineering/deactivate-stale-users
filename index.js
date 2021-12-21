@@ -63,7 +63,7 @@ async function init() {
         var activeUsers = await callAPI(url,reqOptions);
         if (activeUsers.status === 200) {
             for(var a=0; a < activeUsers.body.data.length; a++) {
-                if(typeof(activeUsers.body.data[a].lastActivityAt !== 'undefined')) {
+                if(typeof(activeUsers.body.data[a].lastActivityAt) !== 'undefined') {
                     if(activeUsers.body.data[a].lastActivityAt < lastAcceptedDate) {
                         staleUsersArray.push(activeUsers.body.data[a]);
                     }
@@ -171,6 +171,9 @@ async function init() {
         else {
             console.log('--- SUCCESS! --- Users successfully deactivated - See full details of deactivated users in the output file "deactivated_users.json" or in the list below');
             console.log(JSON.stringify(result, null, '\t'));
+            if (result.length === 0) {
+                result = '[]';
+            }
             var fileName = 'output_files/deactivated_users_' + (+new Date()) + '_.json';
             fs.writeFile(fileName, result, function(err) {});
             return result;

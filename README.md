@@ -17,6 +17,7 @@ This example explains how to retrieve and deactivate inactive/stale users using 
 ```bash
 git clone https://github.com/MiroSolutionsEngineering/deactivate-stale-users.git
 npm install
+npm i file-system
 ```
 
 ### Step 3. Copy `.env` file

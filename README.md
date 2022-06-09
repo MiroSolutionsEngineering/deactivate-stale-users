@@ -41,7 +41,7 @@ cp .env.example .env
 
 ### Step 6. Adjust the number of days a user must be inactive to be considered as "stale"
 
-- Within the file `index.js` locate line `187` and adjust the value of the variable `days`. By default it's set to 61 days.
+- Within the file `index.js` locate line `180` and adjust the value of the variable `days`. By default it's set to 61 days.
 
 
 ### Step 7. Start Node server locally

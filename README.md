@@ -72,4 +72,4 @@ The SCIM API can return the below **expected** errors:
 
 - `404: No resource with ID {user_id}`: Received when attempting to deactivate a user with the role `organization_external_user`. The SCIM API can only deactivate users with the role `organization_internal_user`. In this case, the affected users will be added to the file `other_failed_requests_(unique-timestamp)_.json` within the folder `output_files`. These users would need to be manually deactivated from the Miro User Interface or turned into internal users (after internal approval within your organization has been given).
 
-- To see a full list of all possible errors, click [here](https://developers.miro.com/docs/scim-errors).
+- To see a full list of all possible errors, click [here](https://developers.miro.com/docs/errors).

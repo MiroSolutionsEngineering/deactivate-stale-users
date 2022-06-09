@@ -66,7 +66,7 @@ Once the script runs the results will be available in the local folder `output_f
 
 The SCIM API can return the below **expected** errors:
 
-- `409: Any account in organization must have at least one admin`: Received when the user to downgrade is the last Team Admin of a Miro Team. In this case a file named `conflict_users_(unique-timestamp)_.json` will be created within the folder `output_files` containing the users that could not be deactivated so you can review manually and act accordingly. 
+- `409: Any account in organization must have at least one admin`: Received when the user to deactivate is the last Team Admin of a Miro Team. In this case a file named `conflict_users_(unique-timestamp)_.json` will be created within the folder `output_files` containing the users that could not be deactivated so you can review manually and act accordingly. 
 
 - `429: Too many requests`: Received when the amount of requests made exeeds the SCIM API rate limit. When this occurs, the script automatically holds execution for 61 seconds and then resumes execution automatically, there is no action needed from your side. To learn more about Miro's SCIM API rate limits, click [here](https://developers.miro.com/docs/scim-rate-limits).
 

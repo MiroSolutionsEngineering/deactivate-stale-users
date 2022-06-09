@@ -26,13 +26,11 @@ npm i file-system
 cp .env.example .env
 ```
 
-### Step 4. Create App in Miro
+### Step 4. Enable the SAM module in Miro
 
-- This [guide](https://developers.miro.com/docs/getting-started) shows you how to do it.
+- This [guide](https://help.miro.com/hc/en-us/articles/4403963598226-Software-asset-management-with-Productiv) shows how to get the SAM token.
 
-- [Scopes](https://developers.miro.com/reference#scopes) used in this example: `organizations:read`
-
-- Install the application and add the received Miro OAuth token in the `.env` file
+- Add the received Miro OAuth SAM token in the `.env` file
 
 ### Step 5. Get the SCIM API Token
 

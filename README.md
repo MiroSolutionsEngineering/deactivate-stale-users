@@ -30,7 +30,7 @@ cp .env.example .env
 
 - This [guide](https://help.miro.com/hc/en-us/articles/4403963598226-Software-asset-management-with-Productiv) shows how to get the SAM token.
 
-- Add the received Miro OAuth SAM token in the `.env` file (this will be the `ORGANIZATIONS_API_KEY` in your `.env`)
+- Add the received Miro OAuth SAM token in the `.env` file (this will be the `ORGANIZATIONS_API_KEY` in your `.env` file)
 
 ### Step 5. Get the SCIM API Token
 

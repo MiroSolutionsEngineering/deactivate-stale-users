@@ -28,7 +28,7 @@ cp .env.example .env
 
 ### Step 4. Enable the SAM module in Miro
 
-- This [guide](https://help.miro.com/hc/en-us/articles/4403963598226-Software-asset-management-with-Productiv) shows how to get the SAM token.
+- This [guide](https://help.miro.com/hc/en-us/articles/4403963598226-Software-asset-management-with-Productiv#h_01F6429D4R9AMCCN7CR579TTTZ) shows how to get the SAM token.
 
 - Add the received Miro OAuth SAM token in the `.env` file (this will be the `ORGANIZATIONS_API_KEY` in your `.env` file)
 
